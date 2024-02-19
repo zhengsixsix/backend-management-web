@@ -1,30 +1,83 @@
 <template>
   <Content class="goodsBox">
-    <Button type="primary" style="margin-bottom: 24px" @click="show()">
+    <el-button
+      type="primary"
+      style="margin-bottom: 24px"
+      @click="show()"
+      size="mini"
+    >
       添加
-    </Button>
-    <Form id="searchForm" :model="formItem" :label-width="80" inline>
-      <FormItem label="商品名称">
-        <Input v-model="formItem.key" placeholder="模糊搜索" clearable />
-      </FormItem>
-      <FormItem label="分类">
-        <Select v-model="formItem.typeid" clearable>
-          <Option v-for="item in typeList" :key="item.id" :value="item.id">
+    </el-button>
+    <el-form id="searchForm" :model="formItem" :label-width="80" inline>
+      <el-form-item label="商品名称">
+        <el-input
+          size="mini"
+          v-model="formItem.key"
+          placeholder="模糊搜索"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="分类">
+        <el-select size="mini" v-model="formItem.typeid" clearable>
+          <el-option v-for="item in typeList" :key="item.id" :value="item.id">
             {{ item.name }}
-          </Option>
-        </Select>
-      </FormItem>
-      <FormItem :label-width="20">
-        <Button type="primary" @click="search">查询</Button>
-        <Button style="margin-left: 8px" @click="clear">重置</Button>
-      </FormItem>
-    </Form>
-    <Table
-      :columns="columns"
-      :data="tableData"
-      :height="tablesHeight"
-      border
-    ></Table>
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label-width="20">
+        <el-button size="mini" type="primary" @click="search">查询</el-button>
+        <el-button size="mini" style="margin-left: 8px" @click="clear">
+          重置
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-table :data="tableData" border>
+      <el-table-column
+        prop="name"
+        label="名称"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="price"
+        label="价格"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="desc"
+        label="描述"
+        align="center"
+      ></el-table-column>
+      <el-table-column label="状态" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.foodtypes[0].name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="图片" align="center">
+        <template slot-scope="scope">
+          <img
+            :src="baseUrl + scope.row.img"
+            alt=""
+            style="width: 40px; height: 40px; margin: 10px 0; cursor: pointer"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="show(scope.row)" type="primary">
+            编辑
+          </el-button>
+          <el-popconfirm
+            title="您确认删除这条内容吗？"
+            @confirm="remove(scope.row._id)"
+            style="margin-left: 8px"
+          >
+            <el-button slot="reference" size="mini" type="danger">
+              删除
+            </el-button>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
+    </el-table>
     <Page
       class="table_page_css"
       v-show="total"
@@ -51,98 +104,7 @@ export default {
   },
   data() {
     return {
-      columns: [
-        {
-          title: '名称',
-          key: 'name',
-        },
-        {
-          title: '价格',
-          key: 'price',
-        },
-        {
-          title: '描述',
-          key: 'desc',
-        },
-        {
-          title: '类别',
-          key: 'typename',
-          render(h, params) {
-            return h('div', params.row.foodtypes[0]?.name)
-          },
-        },
-        {
-          title: '图片',
-          key: 'img',
-          align: 'center',
-          render(h, params) {
-            return h('img', {
-              attrs: {
-                src: process.env.VUE_APP_BASEURL + params.row.img,
-              },
-              style: {
-                width: '40px',
-                height: '40px',
-                margin: '10px 0',
-              },
-            })
-          },
-        },
-        {
-          title: '操作',
-          key: 'action',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small',
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.row)
-                    },
-                  },
-                },
-                '编辑',
-              ),
-              h(
-                'Poptip',
-                {
-                  props: {
-                    confirm: true,
-                    transfer: true,
-                    title: '您确认删除这条内容吗？',
-                  },
-                  on: {
-                    'on-ok': () => {
-                      this.remove(params.row._id)
-                    },
-                  },
-                },
-                [
-                  h(
-                    'Button',
-                    {
-                      props: {
-                        type: 'error',
-                        size: 'small',
-                      },
-                    },
-                    '删除',
-                  ),
-                ],
-              ),
-            ])
-          },
-        },
-      ],
+      baseUrl: '',
       tableData: [],
       total: 0,
       searchInfo: {
@@ -162,15 +124,6 @@ export default {
     }
   },
   methods: {
-    setTablesHeight() {
-      let aH = 0
-      let oA = document.getElementById('app')
-      let oH = oA.clientHeight || oA.offsetHeight
-      let sA = document.getElementById('searchForm')
-      let sH = sA.clientHeight || sA.offsetHeight
-      aH = oH - sH - 265
-      this.tablesHeight = aH
-    },
     getList() {
       goodsPage(this.searchInfo)
         .then((res) => {
@@ -238,13 +191,8 @@ export default {
     },
   },
   mounted() {
+    this.baseUrl = process.env.VUE_APP_BASEURL
     this.getList()
-    setTimeout(() => {
-      this.setTablesHeight()
-    }, 50)
-    window.onresize = () => {
-      this.setTablesHeight()
-    }
   },
 }
 </script>

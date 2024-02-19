@@ -1,38 +1,58 @@
 <template>
   <Modal v-model="open" :title="title">
-    <Form
+    <el-form
       ref="formItem"
       :model="formItem"
-      :label-width="80"
+      label-width="80px"
       :rules="ruleValidate"
     >
-      <FormItem label="商品名称" prop="name">
-        <Input v-model="formItem.name" placeholder="请输入商品名称" clearable />
-      </FormItem>
-      <FormItem label="价格" prop="price">
-        <Input v-model="formItem.price" placeholder="请输入价格" clearable />
-      </FormItem>
-      <FormItem label="描述" prop="desc">
-        <Input v-model="formItem.desc" placeholder="请输入描述" clearable />
-      </FormItem>
-      <FormItem label="分类" prop="typeid">
-        <Select v-model="formItem.typeid" clearable>
-          <Option
+      <el-form-item label="商品名称" prop="name">
+        <el-input
+          size="mini"
+          v-model="formItem.name"
+          placeholder="请输入商品名称"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="价格" prop="price">
+        <el-input
+          size="mini"
+          v-model="formItem.price"
+          placeholder="请输入价格"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="描述" prop="desc">
+        <el-input
+          size="mini"
+          v-model="formItem.desc"
+          placeholder="请输入描述"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item label="分类" prop="typeid">
+        <el-select
+          size="mini"
+          v-model="formItem.typeid"
+          style="width: 100%"
+          clearable
+        >
+          <el-option
             v-for="item in typeList"
             :key="item.typeid"
             :value="item.typeid"
           >
             {{ item.name }}
-          </Option>
-        </Select>
-      </FormItem>
-      <FormItem label="上传图片" prop="img">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="上传图片" prop="img">
         <Upload ref="addUpload" :before-upload="handleUpload" action>
           <Button v-show="!imgUrl" icon="md-cloud-upload">上传图片</Button>
           <img v-show="imgUrl" :src="imgUrl" class="uploadImgUrl" />
         </Upload>
-      </FormItem>
-    </Form>
+      </el-form-item>
+    </el-form>
     <div slot="footer" style="text-align: center">
       <Button @click="cancel('formItem')">关闭</Button>
       <Button type="primary" :loading="loading" @click="ok('formItem')">

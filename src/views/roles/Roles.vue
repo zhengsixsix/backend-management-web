@@ -1,23 +1,67 @@
 <template>
   <Content class="goodsBox">
-    <Button type="primary" style="margin-bottom: 24px" @click="show()">
+    <el-button
+      type="primary"
+      style="margin-bottom: 24px"
+      @click="show()"
+      size="mini"
+    >
       添加
-    </Button>
-    <Form id="searchForm" :model="formItem" :label-width="80" inline>
-      <FormItem label="角色名称">
-        <Input v-model="formItem.key" placeholder="模糊搜索" clearable />
-      </FormItem>
-      <FormItem :label-width="20">
-        <Button type="primary" @click="search">查询</Button>
-        <Button style="margin-left: 8px" @click="clear">重置</Button>
-      </FormItem>
-    </Form>
-    <Table
-      :columns="columns"
-      :data="tableData"
-      :height="tablesHeight"
-      border
-    ></Table>
+    </el-button>
+    <el-form id="searchForm" :model="formItem" :label-width="80" inline>
+      <el-form-item label="角色名称">
+        <el-input
+          v-model="formItem.key"
+          placeholder="模糊搜索"
+          clearable
+          size="mini"
+        />
+      </el-form-item>
+      <el-form-item :label-width="20">
+        <el-button type="primary" @click="search" size="mini">查询</el-button>
+        <el-button style="margin-left: 8px" @click="clear" size="mini">
+          重置
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-table :data="tableData" border>
+      <el-table-column type="index" width="60" align="center"></el-table-column>
+      <el-table-column
+        prop="roleName"
+        label="角色名称"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="roleDesc"
+        label="角色描述"
+        align="center"
+      ></el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="show(scope.row)" type="primary">
+            编辑
+          </el-button>
+          <el-popconfirm
+            title="您确认删除这条内容吗？"
+            @confirm="remove(scope.row._id)"
+            style="margin-left: 8px"
+          >
+            <el-button slot="reference" size="mini" type="danger">
+              删除
+            </el-button>
+          </el-popconfirm>
+
+          <el-button
+            style="margin-left: 8px"
+            size="mini"
+            @click="getPermit(scope.row)"
+            type="warning"
+          >
+            分配权限
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
     <Page
       class="table_page_css"
       v-show="total"
@@ -47,93 +91,6 @@ export default {
   },
   data() {
     return {
-      columns: [
-        {
-          type: 'index',
-          width: 60,
-          align: 'center',
-        },
-        {
-          title: '角色名称',
-          key: 'roleName',
-        },
-        {
-          title: '角色描述',
-          key: 'roleDesc',
-        },
-        {
-          title: '操作',
-          key: 'action',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small',
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.row)
-                    },
-                  },
-                },
-                '编辑',
-              ),
-              h(
-                'Poptip',
-                {
-                  props: {
-                    confirm: true,
-                    transfer: true,
-                    title: '您确认删除这条内容吗？',
-                  },
-                  on: {
-                    'on-ok': () => {
-                      this.remove(params.row._id)
-                    },
-                  },
-                },
-                [
-                  h(
-                    'Button',
-                    {
-                      props: {
-                        type: 'error',
-                        size: 'small',
-                      },
-                      style: {
-                        marginRight: '5px',
-                      },
-                    },
-                    '删除',
-                  ),
-                ],
-              ),
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'warning',
-                    size: 'small',
-                  },
-                  on: {
-                    click: () => {
-                      this.getPermit(params.row)
-                    },
-                  },
-                },
-                '分配权限',
-              ),
-            ])
-          },
-        },
-      ],
       tableData: [],
       total: 0,
       searchInfo: {

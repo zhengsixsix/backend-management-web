@@ -1,51 +1,100 @@
 <template>
   <Content class="goodsBox">
-    <Button
+    <el-button
       type="primary"
       style="margin-bottom: 24px; margin-right: 10px"
       @click="show()"
+      size="mini"
     >
       添加
-    </Button>
-    <Button
+    </el-button>
+    <el-button
       type="warning"
       style="margin-bottom: 24px; margin-right: 10px"
       @click="showChildren(true)"
+      size="mini"
     >
       全部展开
-    </Button>
-    <Button style="margin-bottom: 24px" @click="showChildren(false)">
+    </el-button>
+    <el-button
+      style="margin-bottom: 24px"
+      size="mini"
+      @click="showChildren(false)"
+    >
       全部折叠
-    </Button>
-    <Form id="searchForm" :model="formItem" :label-width="80" inline>
-      <FormItem label="权限名称">
-        <Input v-model="formItem.key" placeholder="模糊搜索" clearable />
-      </FormItem>
-      <FormItem :label-width="20">
-        <Button type="primary" @click="search">查询</Button>
-        <Button style="margin-left: 8px" @click="clear">重置</Button>
-      </FormItem>
-    </Form>
-    <Table
-      :columns="columns"
+    </el-button>
+    <el-form id="searchForm" :model="formItem" :label-width="80" inline>
+      <el-form-item label="权限名称">
+        <el-input
+          v-model="formItem.key"
+          size="mini"
+          placeholder="模糊搜索"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item :label-width="20">
+        <el-button type="primary" size="mini" @click="search">查询</el-button>
+        <el-button style="margin-left: 8px" size="mini" @click="clear">
+          重置
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-table
       :data="tableData"
-      :height="tablesHeight"
-      row-key="id"
       border
-    ></Table>
-    <!-- <Page
-      class="table_page_css"
-      v-show="total"
-      :total="total"
-      :current="searchInfo.pageNo"
-      :page-size="searchInfo.pageSize"
-      :page-size-opts="pageSizeOpts"
-      @on-change="pageNoChange"
-      @on-page-size-change="pageSizeChange"
-      show-sizer
-      show-elevator
-      show-total
-    /> -->
+      row-key="id"
+      :tree-props="{ children: 'children' }"
+      ref="table"
+    >
+      <el-table-column
+        prop="id"
+        label="ID"
+        align="center"
+        width="100"
+        sortable
+      ></el-table-column>
+      <el-table-column
+        label="序号"
+        type="index"
+        width="80"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="name"
+        label="权限名称"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="mark"
+        label="权限描述"
+        align="center"
+      ></el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="show(scope.row)" type="primary">
+            编辑
+          </el-button>
+          <el-popconfirm
+            title="您确认删除这条内容吗？"
+            @confirm="remove(scope.row.id)"
+            style="margin-left: 8px"
+          >
+            <el-button slot="reference" size="mini" type="danger">
+              删除
+            </el-button>
+          </el-popconfirm>
+
+          <el-button
+            style="margin-left: 8px"
+            size="mini"
+            @click="show(scope.row, 1)"
+            type="warning"
+          >
+            添加子权限
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
     <AddUpdate @reload="getList" ref="AddUpdate"></AddUpdate>
   </Content>
 </template>
@@ -59,100 +108,6 @@ export default {
   },
   data() {
     return {
-      columns: [
-        {
-          title: 'ID',
-          key: 'id',
-          width: 100,
-          tree: true,
-        },
-        {
-          title: '序号',
-          key: 'sort',
-          align: 'center',
-          width: 80,
-        },
-        {
-          title: '权限名称',
-          key: 'name',
-        },
-        {
-          title: '权限描述',
-          key: 'mark',
-        },
-        {
-          title: '操作',
-          key: 'action',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small',
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.row)
-                    },
-                  },
-                },
-                '编辑',
-              ),
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'warning',
-                    size: 'small',
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.row, 1)
-                    },
-                  },
-                },
-                '添加子权限',
-              ),
-              h(
-                'Poptip',
-                {
-                  props: {
-                    confirm: true,
-                    transfer: true,
-                    title: '您确认删除这条内容吗？',
-                  },
-                  on: {
-                    'on-ok': () => {
-                      this.remove(params.row._id)
-                    },
-                  },
-                },
-                [
-                  h(
-                    'Button',
-                    {
-                      props: {
-                        type: 'error',
-                        size: 'small',
-                      },
-                    },
-                    '删除',
-                  ),
-                ],
-              ),
-            ])
-          },
-        },
-      ],
       tableData: [],
       total: 0,
       searchInfo: {
@@ -240,16 +195,9 @@ export default {
       this.getList()
     },
     showChildren(isShow) {
-      // const temp = this.tableData
-      function recursion(temp) {
-        temp.map((item) => {
-          item._showChildren = isShow
-          if (item.children.length) {
-            recursion(item.children)
-          }
-        })
-      }
-      recursion(this.tableData)
+      this.tableData.forEach((item) => {
+        this.$refs['table'].toggleRowExpansion(item, isShow)
+      })
     },
   },
   mounted() {

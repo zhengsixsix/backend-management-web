@@ -60,11 +60,38 @@ const router = new VueRouter({
           },
         },
         {
-          path: '/goods',
+          path: '/goods/goods',
           name: 'goods',
           component: () => import('@/views/goods/Goods'),
           meta: {
-            title: '商品管理',
+            title: '商品列表',
+            noCache: true,
+          },
+        },
+        {
+          path: '/goods/classification',
+          name: 'classification',
+          component: () => import('@/views/classification/Classification'),
+          meta: {
+            title: '商品分类',
+            noCache: true,
+          },
+        },
+        {
+          path: '/Order',
+          name: 'Order',
+          component: () => import('@/views/order/Order'),
+          meta: {
+            title: '订单管理',
+            noCache: true,
+          },
+        },
+        {
+          path: '/goods/inventory',
+          name: 'inventory',
+          component: () => import('@/views/inventory/Inventory'),
+          meta: {
+            title: '库存管理',
             noCache: true,
           },
         },

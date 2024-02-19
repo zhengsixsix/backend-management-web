@@ -1,23 +1,65 @@
 <template>
   <Content class="goodsBox">
-    <Button type="primary" style="margin-bottom: 24px" @click="show">
+    <el-button
+      type="primary"
+      style="margin-bottom: 24px"
+      @click="show"
+      size="mini"
+    >
       添加
-    </Button>
-    <Form id="searchForm" :model="formItem" :label-width="80" inline>
-      <FormItem label="账号">
-        <Input v-model="formItem.key" placeholder="模糊搜索" clearable />
-      </FormItem>
-      <FormItem :label-width="20">
-        <Button type="primary" @click="search">查询</Button>
-        <Button style="margin-left: 8px" @click="clear">重置</Button>
-      </FormItem>
-    </Form>
-    <Table
-      :columns="columns"
-      :data="tableData"
-      :height="tablesHeight"
-      border
-    ></Table>
+    </el-button>
+    <el-form id="searchForm" :model="formItem" :label-width="80" inline>
+      <el-form-item label="账号">
+        <el-input
+          size="mini"
+          v-model="formItem.key"
+          placeholder="模糊搜索"
+          clearable
+        />
+      </el-form-item>
+      <el-form-item :label-width="20">
+        <el-button size="mini" type="primary" @click="search">查询</el-button>
+        <el-button size="mini" style="margin-left: 8px" @click="clear">
+          重置
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-table :data="tableData" border>
+      <el-table-column prop="us" label="账号" align="center"></el-table-column>
+      <el-table-column label="性别" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.sex === 0 ? '男' : '女' }}
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" align="center">
+        <template slot-scope="scope">
+          <el-switch
+            @change="updateState(scope.row.id, $event)"
+            v-model="scope.row.state"
+          ></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="$refs.UsersRole.init(scope.row)"
+            type="primary"
+          >
+            分配角色
+          </el-button>
+          <el-popconfirm
+            title="您确认删除这条内容吗？"
+            @confirm="remove(scope.row._id)"
+            style="margin-left: 8px"
+          >
+            <el-button slot="reference" size="mini" type="danger">
+              删除
+            </el-button>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
+    </el-table>
     <Page
       class="table_page_css"
       v-show="total"
@@ -47,96 +89,6 @@ export default {
   },
   data() {
     return {
-      columns: [
-        {
-          title: '账号',
-          key: 'us',
-        },
-        {
-          title: '性别',
-          key: 'sex',
-          render(h, params) {
-            return h('div', params.row.sex === 0 ? '男' : '女')
-          },
-        },
-        {
-          title: '状态',
-          key: 'state',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h(
-                'i-switch',
-                {
-                  props: {
-                    value: params.row.state ? true : false,
-                  },
-                  on: {
-                    'on-change': (state) => {
-                      this.updateState(params.row.id, state)
-                    },
-                  },
-                },
-                'View',
-              ),
-            ])
-          },
-        },
-        {
-          title: '操作',
-          key: 'action',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h(
-                'Button',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small',
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.$refs.UsersRole.init(params.row)
-                    },
-                  },
-                },
-                '分配角色',
-              ),
-              h(
-                'Poptip',
-                {
-                  props: {
-                    confirm: true,
-                    transfer: true,
-                    title: '您确认删除这条内容吗？',
-                  },
-                  on: {
-                    'on-ok': () => {
-                      this.remove(params.row._id)
-                    },
-                  },
-                },
-                [
-                  h(
-                    'Button',
-                    {
-                      props: {
-                        type: 'error',
-                        size: 'small',
-                      },
-                    },
-                    '删除',
-                  ),
-                ],
-              ),
-            ])
-          },
-        },
-      ],
       tableData: [],
       total: 0,
       searchInfo: {
@@ -151,15 +103,6 @@ export default {
     }
   },
   methods: {
-    setTablesHeight() {
-      let aH = 0
-      let oA = document.getElementById('app')
-      let oH = oA.clientHeight || oA.offsetHeight
-      let sA = document.getElementById('searchForm')
-      let sH = sA.clientHeight || sA.offsetHeight
-      aH = oH - sH - 265
-      this.tablesHeight = aH
-    },
     getList() {
       usersPage(this.searchInfo)
         .then((res) => {
@@ -236,12 +179,6 @@ export default {
   },
   mounted() {
     this.getList()
-    setTimeout(() => {
-      this.setTablesHeight()
-    }, 50)
-    window.onresize = () => {
-      this.setTablesHeight()
-    }
   },
 }
 </script>

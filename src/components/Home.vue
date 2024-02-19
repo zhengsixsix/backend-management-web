@@ -245,6 +245,21 @@ export default {
   position: relative;
   border-radius: 4px;
   overflow: hidden;
+  .layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+
+  img {
+    user-select: none;
+    pointer-events: none;
+  }
   .ivu-layout {
     height: 100%;
     .ivu-layout-header {
@@ -254,9 +269,19 @@ export default {
         color: #fff;
         float: right;
         cursor: pointer;
+
+        z-index: 1000;
+        position: absolute;
+        right: 10px;
+        top: 0px;
         .ivu-icon {
           vertical-align: middle;
         }
+      }
+      .ivu-icon {
+        position: sticky;
+        z-index: 1000;
+        cursor: pointer;
       }
     }
     .ivu-layout-content {
@@ -274,9 +299,10 @@ export default {
     width: 200px;
     height: 100%;
     color: #fff;
-    background: #5b6270;
-    border-radius: 3px;
+    background-color: #515a6e;
     float: left;
+    z-index: 1000;
+    position: sticky;
   }
   .layout-nav {
     width: 420px;
