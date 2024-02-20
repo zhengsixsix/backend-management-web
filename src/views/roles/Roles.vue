@@ -1,5 +1,5 @@
 <template>
-  <Content class="goodsBox">
+  <el-card class="goodsBox">
     <el-button
       type="primary"
       style="margin-bottom: 24px"
@@ -77,7 +77,7 @@
     />
     <AddUpdate @reload="getList" ref="AddUpdate"></AddUpdate>
     <RolesPermits @reload="getList" ref="RolesPermits"></RolesPermits>
-  </Content>
+  </el-card>
 </template>
 <script>
 import { rolesPage, rolesDel } from '@/api/role'

@@ -1,7 +1,34 @@
 <template>
-  <Content>
-    <div id="myChart" :style="{ width: '300px', height: '300px' }"></div>
-  </Content>
+  <div class="other">
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>商品库存统计</span>
+          </div>
+          <div id="myChart" :style="{ width: '300px', height: '300px' }"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>商品分类统计</span>
+          </div>
+          <div id="myChart" :style="{ width: '300px', height: '300px' }"></div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20" style="margin-top: 10px">
+      <el-col :span="24">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>商品订单统计</span>
+          </div>
+          <div id="myChart" :style="{ width: '300px', height: '300px' }"></div>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 <script>
 import Echarts from 'echarts'
@@ -21,7 +48,6 @@ export default {
       let myChart = Echarts.init(document.getElementById('myChart'))
       // 绘制图表
       myChart.setOption({
-        title: { text: '在Vue中使用echarts' },
         tooltip: {},
         xAxis: {
           data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
@@ -39,3 +65,13 @@ export default {
   },
 }
 </script>
+<style lang="less" scoped>
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: '';
+}
+.clearfix:after {
+  clear: both;
+}
+</style>

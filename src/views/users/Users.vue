@@ -1,5 +1,5 @@
 <template>
-  <Content class="goodsBox">
+  <el-card class="goodsBox">
     <el-button
       type="primary"
       style="margin-bottom: 24px"
@@ -75,7 +75,7 @@
     />
     <AddUpdate @reload="getList" ref="AddUpdate"></AddUpdate>
     <UsersRole @reload="getList" ref="UsersRole"></UsersRole>
-  </Content>
+  </el-card>
 </template>
 <script>
 import { usersPage, usersDel, usersUpdateState } from '@/api/user'
@@ -183,9 +183,4 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.goodsBox {
-  .ivu-form-inline .ivu-form-item {
-    width: 267px;
-  }
-}
 </style>

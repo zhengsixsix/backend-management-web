@@ -1,5 +1,5 @@
 <template>
-  <Content class="goodsBox">
+  <el-card class="goodsBox">
     <el-button
       type="primary"
       style="margin-bottom: 24px; margin-right: 10px"
@@ -96,7 +96,7 @@
       </el-table-column>
     </el-table>
     <AddUpdate @reload="getList" ref="AddUpdate"></AddUpdate>
-  </Content>
+  </el-card>
 </template>
 <script>
 import { permitsList, permitsDel } from '@/api/permit'

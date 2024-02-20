@@ -1,5 +1,5 @@
 <template>
-  <Content class="goodsBox">
+  <el-card class="goodsBox">
     <el-button
       type="primary"
       style="margin-bottom: 24px"
@@ -92,7 +92,7 @@
       show-total
     />
     <AddUpdate @reload="getList" ref="AddUpdate"></AddUpdate>
-  </Content>
+  </el-card>
 </template>
 <script>
 import { goodsPage, goodsDel } from '@/api/goods'
