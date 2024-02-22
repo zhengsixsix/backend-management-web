@@ -3,7 +3,7 @@
     <el-form id="searchForm" :model="formItem" :label-width="80" inline>
       <el-form-item label="商品名称">
         <el-input
-          size="mini"
+          size="small"
           v-model="formItem.key"
           placeholder="模糊搜索"
           clearable
@@ -11,15 +11,15 @@
       </el-form-item>
       <el-form-item label="存放区">
         <el-input
-          size="mini"
+          size="small"
           v-model="formItem.key"
           placeholder="模糊搜索"
           clearable
         />
       </el-form-item>
       <el-form-item :label-width="20">
-        <el-button size="mini" type="primary" @click="search">查询</el-button>
-        <el-button size="mini" style="margin-left: 8px" @click="clear">
+        <el-button size="small" type="primary" @click="search">查询</el-button>
+        <el-button size="small" style="margin-left: 8px" @click="clear">
           重置
         </el-button>
       </el-form-item>
@@ -40,7 +40,7 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button
-            size="mini"
+            size="small"
             @click="$refs.UsersRole.init(scope.row)"
             type="primary"
           >

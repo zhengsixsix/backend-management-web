@@ -8,7 +8,7 @@
     >
       <el-form-item label="商品名称" prop="name">
         <el-input
-          size="mini"
+          size="small"
           v-model="formItem.name"
           placeholder="请输入商品名称"
           clearable
@@ -16,7 +16,7 @@
       </el-form-item>
       <el-form-item label="价格" prop="price">
         <el-input
-          size="mini"
+          size="small"
           v-model="formItem.price"
           placeholder="请输入价格"
           clearable
@@ -24,7 +24,7 @@
       </el-form-item>
       <el-form-item label="描述" prop="desc">
         <el-input
-          size="mini"
+          size="small"
           v-model="formItem.desc"
           placeholder="请输入描述"
           clearable
@@ -32,7 +32,7 @@
       </el-form-item>
       <el-form-item label="分类" prop="typeid">
         <el-select
-          size="mini"
+          size="small"
           v-model="formItem.typeid"
           style="width: 100%"
           clearable

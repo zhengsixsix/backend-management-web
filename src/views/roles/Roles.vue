@@ -4,7 +4,7 @@
       type="primary"
       style="margin-bottom: 24px"
       @click="show()"
-      size="mini"
+      size="small"
     >
       添加
     </el-button>
@@ -14,12 +14,12 @@
           v-model="formItem.key"
           placeholder="模糊搜索"
           clearable
-          size="mini"
+          size="small"
         />
       </el-form-item>
       <el-form-item :label-width="20">
-        <el-button type="primary" @click="search" size="mini">查询</el-button>
-        <el-button style="margin-left: 8px" @click="clear" size="mini">
+        <el-button type="primary" @click="search" size="small">查询</el-button>
+        <el-button style="margin-left: 8px" @click="clear" size="small">
           重置
         </el-button>
       </el-form-item>
@@ -38,7 +38,7 @@
       ></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="show(scope.row)" type="primary">
+          <el-button size="small" @click="show(scope.row)" type="primary">
             编辑
           </el-button>
           <el-popconfirm
@@ -46,14 +46,14 @@
             @confirm="remove(scope.row._id)"
             style="margin-left: 8px"
           >
-            <el-button slot="reference" size="mini" type="danger">
+            <el-button slot="reference" size="small" type="danger">
               删除
             </el-button>
           </el-popconfirm>
 
           <el-button
             style="margin-left: 8px"
-            size="mini"
+            size="small"
             @click="getPermit(scope.row)"
             type="warning"
           >

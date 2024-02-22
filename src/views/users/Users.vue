@@ -4,22 +4,22 @@
       type="primary"
       style="margin-bottom: 24px"
       @click="show"
-      size="mini"
+      size="small"
     >
       添加
     </el-button>
     <el-form id="searchForm" :model="formItem" :label-width="80" inline>
       <el-form-item label="账号">
         <el-input
-          size="mini"
+          size="small"
           v-model="formItem.key"
           placeholder="模糊搜索"
           clearable
         />
       </el-form-item>
       <el-form-item :label-width="20">
-        <el-button size="mini" type="primary" @click="search">查询</el-button>
-        <el-button size="mini" style="margin-left: 8px" @click="clear">
+        <el-button size="small" type="primary" @click="search">查询</el-button>
+        <el-button size="small" style="margin-left: 8px" @click="clear">
           重置
         </el-button>
       </el-form-item>
@@ -42,7 +42,7 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button
-            size="mini"
+            size="small"
             @click="$refs.UsersRole.init(scope.row)"
             type="primary"
           >
@@ -53,7 +53,7 @@
             @confirm="remove(scope.row._id)"
             style="margin-left: 8px"
           >
-            <el-button slot="reference" size="mini" type="danger">
+            <el-button slot="reference" size="small" type="danger">
               删除
             </el-button>
           </el-popconfirm>

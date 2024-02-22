@@ -19,7 +19,7 @@
             <el-table-column label="操作" align="center">
               <template slot-scope="scope">
                 <el-button
-                  size="mini"
+                  size="small"
                   @click="$refs.UsersRole.init(scope.row)"
                   type="primary"
                 >
@@ -59,7 +59,7 @@
             <el-table-column label="操作" align="center">
               <template slot-scope="scope">
                 <el-button
-                  size="mini"
+                  size="small"
                   @click="$refs.UsersRole.init(scope.row)"
                   type="primary"
                 >

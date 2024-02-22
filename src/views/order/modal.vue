@@ -115,6 +115,7 @@
               <el-date-picker
                 style="width: 100%"
                 size="small"
+                value-format="yyyy-MM-dd hh:mm:ss"
                 v-model="formData.PlaceOrder"
                 type="datetime"
                 placeholder="选择日期时间"
@@ -133,9 +134,9 @@
 </template>
 
 <script>
-import { addOrder, getAllFoods } from '@/api/order'
+import { addOrder, getAllFoods, update } from '@/api/order'
 export default {
-  props: ['dialogVisible', 'title'],
+  props: ['dialogVisible', 'title', 'info'],
   data() {
     return {
       formData: {
@@ -168,8 +169,14 @@ export default {
   },
   created() {
     this.getFoodsList()
+    this.eachData()
   },
   methods: {
+    eachData() {
+      if (this.title == '编辑订单') {
+        this.formData = JSON.parse(JSON.stringify(this.info))
+      }
+    },
     async getFoodsList() {
       let { data } = await getAllFoods()
       if (data.code == 200) {
@@ -179,11 +186,20 @@ export default {
       }
     },
     async handlerSubmit() {
-      let { data } = await addOrder(this.formData)
-      if (data.code == 200) {
-        this.$message.success('添加成功')
-        // this.$parent.$parent.getList()
-        this.$parent.$parent.handleClose()
+      if (this.title == '编辑订单') {
+        let { data } = await update(this.formData)
+        if (data.code == 200) {
+          this.$message.success(data.msg)
+          this.$parent.$parent.getDataList()
+          this.$parent.$parent.handleClose()
+        }
+      } else {
+        let { data } = await addOrder(this.formData)
+        if (data.code == 200) {
+          this.$message.success('添加成功')
+          this.$parent.$parent.getDataList()
+          this.$parent.$parent.handleClose()
+        }
       }
     },
     handleClose() {

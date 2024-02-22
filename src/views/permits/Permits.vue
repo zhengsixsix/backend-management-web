@@ -4,7 +4,7 @@
       type="primary"
       style="margin-bottom: 24px; margin-right: 10px"
       @click="show()"
-      size="mini"
+      size="small"
     >
       添加
     </el-button>
@@ -12,13 +12,13 @@
       type="warning"
       style="margin-bottom: 24px; margin-right: 10px"
       @click="showChildren(true)"
-      size="mini"
+      size="small"
     >
       全部展开
     </el-button>
     <el-button
       style="margin-bottom: 24px"
-      size="mini"
+      size="small"
       @click="showChildren(false)"
     >
       全部折叠
@@ -27,14 +27,14 @@
       <el-form-item label="权限名称">
         <el-input
           v-model="formItem.key"
-          size="mini"
+          size="small"
           placeholder="模糊搜索"
           clearable
         />
       </el-form-item>
       <el-form-item :label-width="20">
-        <el-button type="primary" size="mini" @click="search">查询</el-button>
-        <el-button style="margin-left: 8px" size="mini" @click="clear">
+        <el-button type="primary" size="small" @click="search">查询</el-button>
+        <el-button style="margin-left: 8px" size="small" @click="clear">
           重置
         </el-button>
       </el-form-item>
@@ -71,7 +71,7 @@
       ></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="show(scope.row)" type="primary">
+          <el-button size="small" @click="show(scope.row)" type="primary">
             编辑
           </el-button>
           <el-popconfirm
@@ -79,14 +79,14 @@
             @confirm="remove(scope.row.id)"
             style="margin-left: 8px"
           >
-            <el-button slot="reference" size="mini" type="danger">
+            <el-button slot="reference" size="small" type="danger">
               删除
             </el-button>
           </el-popconfirm>
 
           <el-button
             style="margin-left: 8px"
-            size="mini"
+            size="small"
             @click="show(scope.row, 1)"
             type="warning"
           >
