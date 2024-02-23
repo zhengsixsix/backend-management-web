@@ -36,8 +36,34 @@
         <el-card>
           <div slot="header" class="clearfix">
             <span>商品类型</span>
+            <div>
+              <el-button
+                type="primary"
+                size="small"
+                @click="addCommodityClass('add')"
+              >
+                添加分类
+              </el-button>
+              <el-button type="primary" size="small">编辑分类</el-button>
+              <el-button type="primary" size="small">删除分类</el-button>
+            </div>
           </div>
-          <el-tree :data="TreeData"></el-tree>
+          <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+          >
+            <el-menu-item index="2">
+              <span slot="title">导航二</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <span slot="title">导航三</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <span slot="title">导航四</span>
+            </el-menu-item>
+          </el-menu>
         </el-card>
       </el-col>
       <el-col :span="18">
@@ -71,71 +97,34 @@
         </el-card>
       </el-col>
     </el-row>
+    <Modal1 :type="modalType" :Modal1Bol="Modal1Bol" @close="modalClose" />
   </div>
 </template>
 <script>
+import Modal1 from './components/modal1.vue'
 export default {
   name: 'Classification',
+  components: { Modal1 },
   data() {
     return {
-      TreeData: [
-        {
-          label: '一级 1',
-          children: [
-            {
-              label: '二级 1-1',
-              children: [
-                {
-                  label: '三级 1-1-1',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: '一级 2',
-          children: [
-            {
-              label: '二级 2-1',
-              children: [
-                {
-                  label: '三级 2-1-1',
-                },
-              ],
-            },
-            {
-              label: '二级 2-2',
-              children: [
-                {
-                  label: '三级 2-2-1',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: '一级 3',
-          children: [
-            {
-              label: '二级 3-1',
-              children: [
-                {
-                  label: '三级 3-1-1',
-                },
-              ],
-            },
-            {
-              label: '二级 3-2',
-              children: [
-                {
-                  label: '三级 3-2-1',
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      modalType: '',
+      Modal1Bol: false,
     }
+  },
+  methods: {
+    addCommodityClass() {
+      this.Modal1Bol = true
+    },
+    modalClose() {
+      this.Modal1Bol = false
+    },
   },
 }
 </script>
+<style lang="less" scoped>
+.clearfix {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
