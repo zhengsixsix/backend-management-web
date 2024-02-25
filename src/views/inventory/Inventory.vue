@@ -52,16 +52,29 @@
   </el-card>
 </template>
 <script>
+import { goodsPage } from '@/api/goods'
 export default {
   name: 'Inventory',
   data() {
     return {
+      tableData: [],
       formItem: {
-        key: '',
+        name: '',
+        pageNum: 1,
+        pageSize: 10,
       },
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
+    async getData() {
+      let { data } = await goodsPage()
+      if (data.code == 200) {
+        this.tableData = data.data
+      }
+    },
     search() {
       console.log('search')
     },

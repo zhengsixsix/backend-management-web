@@ -28,6 +28,7 @@
           v-model="formItem.productType"
           placeholder="请选择"
           style="width: 100%"
+          clearable
         >
           <el-option
             v-for="item of productTypeList"
@@ -53,6 +54,7 @@
           v-model="formItem.PaymentMethod"
           placeholder="请选择"
           style="width: 100%"
+          clearable
         >
           <el-option
             v-for="item of PaymentMethodList"
@@ -219,6 +221,10 @@ export default {
       this.formItem.orderNo = ''
       this.formItem.pageNo = 1
       this.formItem.pageSize = 10
+      this.formItem.PaymentMethod = ''
+      this.formItem.productType = ''
+      this.formItem.startDate = ''
+      this.formItem.endDate = ''
       this.getDataList()
     },
     handlerEdit(v) {

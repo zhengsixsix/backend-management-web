@@ -17,13 +17,13 @@
           clearable
         />
       </el-form-item>
-      <el-form-item label="分类">
+      <!-- <el-form-item label="分类">
         <el-select size="small" v-model="formItem.typeid" clearable>
           <el-option v-for="item in typeList" :key="item.id" :value="item.id">
             {{ item.name }}
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item :label-width="20">
         <el-button size="small" type="primary" @click="search">查询</el-button>
         <el-button size="small" style="margin-left: 8px" @click="clear">
@@ -47,11 +47,11 @@
         label="描述"
         align="center"
       ></el-table-column>
-      <el-table-column label="状态" align="center">
+      <!-- <el-table-column label="状态" align="center">
         <template slot-scope="scope">
           {{ scope.row.foodtypes[0].name }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="图片" align="center">
         <template slot-scope="scope">
           <img

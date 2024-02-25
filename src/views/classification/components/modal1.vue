@@ -34,8 +34,9 @@
 </template>
 
 <script>
+import { classAdd, classPage, classUpdate } from '@/api/class'
 export default {
-  props: ['Modal1Bol', 'type'],
+  props: ['Modal1Bol', 'type', 'MenuIndex'],
   data() {
     return {
       rules: {
@@ -52,13 +53,40 @@ export default {
       },
     }
   },
+  created() {
+    this.echoData()
+  },
   methods: {
+    async echoData() {
+      if (this.type != 'edit') return
+      let { data } = await classPage({ _id: this.MenuIndex })
+      if (data.code == 200) {
+        this.formItem = data.data[0]
+      }
+    },
     handleClose() {
       this.$emit('close')
     },
     handlerSubmit(name) {
-      this.$refs[name].validate((valid) => {
+      this.$refs[name].validate(async (valid) => {
         if (!valid) return
+        if (this.type == 'edit') {
+          let { data } = await classUpdate(this.formItem)
+          if (data.code == 200) {
+            this.$message.success('修改成功')
+            this.$parent.getClassData()
+          } else {
+            this.$message.info(data.msg)
+          }
+        } else {
+          let { data } = await classAdd(this.formItem)
+          if (data.code == 200) {
+            this.$message.success('添加成功')
+            this.$parent.getClassData()
+          } else {
+            this.$message.info(data.msg)
+          }
+        }
         this.$emit('close')
       })
     },

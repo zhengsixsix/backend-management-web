@@ -30,21 +30,21 @@
           clearable
         />
       </el-form-item>
-      <el-form-item label="分类" prop="typeid">
-        <el-select
+      <el-form-item label="规格" prop="Specifications">
+        <el-input
           size="small"
-          v-model="formItem.typeid"
-          style="width: 100%"
+          v-model="formItem.Specifications"
+          placeholder="请输入规格"
           clearable
-        >
-          <el-option
-            v-for="item in typeList"
-            :key="item.typeid"
-            :value="item.typeid"
-          >
-            {{ item.name }}
-          </el-option>
-        </el-select>
+        />
+      </el-form-item>
+      <el-form-item label="货位">
+        <el-input
+          size="small"
+          v-model="formItem.CargoSpace"
+          placeholder="请输入货位"
+          clearable
+        />
       </el-form-item>
       <el-form-item label="上传图片" prop="img">
         <Upload ref="addUpload" :before-upload="handleUpload" action>
@@ -72,18 +72,18 @@ export default {
         name: '',
         price: '',
         desc: '',
-        typeid: '',
+        Specifications: '',
+        CargoSpace: '',
       },
       ruleValidate: {
         name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
         price: [{ required: true, message: '请输入价格', trigger: 'blur' }],
         desc: [{ required: true, message: '请输入描述', trigger: 'blur' }],
-        typeid: [
+        Specifications: [
           {
             required: true,
-            message: '请输入商品名称',
+            message: '请输入规格',
             trigger: 'blur',
-            type: 'number',
           },
         ],
       },

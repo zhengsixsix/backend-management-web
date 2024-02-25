@@ -288,7 +288,7 @@ export default {
 .ivu-menu {
   position: relative;
   overflow: hidden;
-  height: 6.9vh;
+  height: 100%;
   max-height: 240px;
 }
 </style>
