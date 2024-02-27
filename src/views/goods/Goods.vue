@@ -104,7 +104,6 @@ export default {
   },
   data() {
     return {
-      baseUrl: '',
       tableData: [],
       total: 0,
       searchInfo: {
@@ -121,6 +120,7 @@ export default {
         { id: 2, name: '热菜' },
       ],
       tablesHeight: 0,
+      baseUrl: '',
     }
   },
   methods: {

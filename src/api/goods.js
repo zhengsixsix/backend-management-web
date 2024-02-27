@@ -16,6 +16,14 @@ export const goodsUpdate = (info) => {
     method: 'post',
   })
 }
+// addInventory
+export const addInventory = (info) => {
+  return axios.request({
+    url: 'food/addInventory',
+    data: info,
+    method: 'post',
+  })
+}
 // 商品添加
 export const goodsAdd = (info) => {
   return axios.request({

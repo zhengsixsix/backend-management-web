@@ -31,33 +31,72 @@
         align="center"
         width="80"
       ></el-table-column>
-      <el-table-column label="商品名称" align="center"></el-table-column>
-      <el-table-column label="规格" align="center"></el-table-column>
-      <el-table-column label="货位" align="center"></el-table-column>
-      <el-table-column label="库存数量" align="center"></el-table-column>
-      <el-table-column label="实际盘点量" align="center"></el-table-column>
-      <el-table-column label="盈亏量" align="center"></el-table-column>
+      <el-table-column label="商品图片" align="center">
+        <template slot-scope="scope">
+          <img
+            :src="baseUrl + scope.row.img"
+            alt=""
+            style="width: 40px; height: 40px; cursor: pointer"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="商品名称"
+        align="center"
+        prop="name"
+      ></el-table-column>
+      <el-table-column
+        label="规格"
+        align="center"
+        prop="Specifications"
+      ></el-table-column>
+      <el-table-column label="货位" align="center">
+        <template slot-scope="scope">
+          <el-input size="small" v-model="scope.row.CargoSpace" />
+        </template>
+      </el-table-column>
+      <el-table-column label="库存数量" align="center">
+        <template slot-scope="scope">
+          <el-input size="small"  type="number" v-model="scope.row.Inventory" />
+        </template>
+      </el-table-column>
+      <el-table-column label="实际盘点量" align="center">
+        <template slot-scope="scope">
+          <el-input
+            size="small"
+            type="number"
+            v-model="scope.row.ActualStocktakingQuantity"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column label="盈亏量" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.Inventory - scope.row.ActualStocktakingQuantity || 0 }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="small"
-            @click="$refs.UsersRole.init(scope.row)"
-            type="primary"
+          <el-popconfirm
+            title="是否绑定该分类？"
+            @confirm="handlerSubmit(scope.row)"
           >
-            编辑信息
-          </el-button>
+            <el-button size="small" slot="reference" type="primary">
+              保存信息
+            </el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
   </el-card>
 </template>
 <script>
-import { goodsPage } from '@/api/goods'
+import { goodsPage, addInventory } from '@/api/goods'
 export default {
   name: 'Inventory',
   data() {
     return {
       tableData: [],
+      baseUrl: '',
       formItem: {
         name: '',
         pageNum: 1,
@@ -67,8 +106,18 @@ export default {
   },
   created() {
     this.getData()
+    this.baseUrl = process.env.VUE_APP_BASEURL
   },
   methods: {
+    async handlerSubmit(v) {
+      let { data } = await addInventory(v)
+      if (data.code == 200) {
+        this.$message.success('保存成功')
+        this.getData()
+      } else {
+        this.$message.info('保存失败')
+      }
+    },
     async getData() {
       let { data } = await goodsPage()
       if (data.code == 200) {

@@ -277,6 +277,7 @@ export default {
       Modal1Info: null,
       ClassTableData: [],
       MenuIndex: '',
+      baseUrl: '',
       NoFormItem: {
         name: '',
         CargoSpace: '',
@@ -296,6 +297,7 @@ export default {
     }
   },
   created() {
+    this.baseUrl = process.env.VUE_APP_BASEURL
     this.getClassData()
     this.getNoClassType()
     this.getYesClassType()
