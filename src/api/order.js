@@ -21,7 +21,7 @@ export const getAllFoods = (info) => {
   return axios.request({
     url: 'order/getAllFoods',
     data: info,
-    method: 'get',
+    method: 'post',
   })
 }
 // delete

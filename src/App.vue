@@ -8,6 +8,30 @@
 export default {
   name: 'App',
   components: {},
+  mounted() {
+    this.setFont()
+    window.addEventListener('resize', () => this.setFont(), false)
+    this.$nextTick().then(
+      Object.defineProperty(Event.prototype, 'path', {
+        get() {
+          return this.composedPath()
+        },
+      }),
+    )
+  },
+  methods: {
+    setFont(data) {
+      if (data) {
+        var cliWidth = data - 10
+      } else {
+        var html = document.documentElement
+        var cliWidth = html.clientWidth - 10
+      }
+      this.$nextTick(() => {
+        document.documentElement.style.fontSize = 10 * (cliWidth / 1920) + 'px'
+      })
+    },
+  },
 }
 </script>
 

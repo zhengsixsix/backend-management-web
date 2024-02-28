@@ -2,13 +2,13 @@
   <Header ref="header">
     <Menu mode="horizontal" theme="dark" active-name="1">
       <div class="layout-logo">超市后台管理系统</div>
-      <Icon
+      <!-- <Icon
         @click.native="collapsedSider"
         :class="rotateIcon"
         style="margin: 0 20px; color: #fff"
         type="md-menu"
         size="24"
-      ></Icon>
+      ></Icon> -->
     </Menu>
     <Dropdown class="log_out" @on-click="downMenuClick">
       <Icon type="md-contact" size="30" />
@@ -290,5 +290,8 @@ export default {
   overflow: hidden;
   height: 100%;
   max-height: 240px;
+}
+.layout-logo {
+  // background: linear-gradient(125deg, #42e695, #3bb2b8);
 }
 </style>

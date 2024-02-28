@@ -258,6 +258,17 @@ export default {
     user-select: none;
     pointer-events: none;
   }
+  .ivu-layout-sider-children {
+    box-shadow: 0 0.2rem 1.5rem 0 rgba(0, 0, 0, 0.1);
+    // background: linear-gradient(125deg, #42e695, #3bb2b8) !important;
+  }
+  .ivu-menu-dark,
+  .ivu-menu,
+  .ivu-menu-item,
+  .ivu-menu-submenu,
+  .ivu-menu-submenu-title {
+    // background: transparent !important;
+  }
   .ivu-layout {
     height: 100%;
     .ivu-layout-header {
@@ -289,6 +300,10 @@ export default {
     }
     .ivu-layout-sider {
       background: #515a6e !important;
+      width: 200px !important;
+      min-width: 200px !important;
+      max-width: 200px !important;
+      flex: 0 0 200px !important;
     }
   }
   .layout-logo {

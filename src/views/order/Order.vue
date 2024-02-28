@@ -4,7 +4,7 @@
       <el-button size="small" type="primary" @click="addOrder">添加</el-button>
     </div>
     <el-form id="searchForm" :model="formItem" :label-width="80" inline>
-      <el-form-item label="开始日">
+      <!-- <el-form-item label="开始日">
         <el-input
           size="small"
           v-model="formItem.startDate"
@@ -21,7 +21,7 @@
           placeholder="模糊搜索"
           clearable
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="订单状态">
         <el-select
           size="small"
@@ -161,6 +161,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      style="float: right; margin: 3px 0"
+      layout="prev, pager, next"
+      :total="total"
+      @current-change="ChangePage"
+    />
     <ModalVue
       v-if="dialogVisible"
       :dialogVisible="dialogVisible"
@@ -179,6 +185,7 @@ export default {
   },
   data() {
     return {
+      total: 0,
       ModalInfo: null,
       dialogVisible: false,
       productTypeList: [
@@ -217,6 +224,10 @@ export default {
         this.$message.error(res.msg)
       }
     },
+    ChangePage(v) {
+      this.formItem.pageNo = v
+      this.getDataList()
+    },
     clear() {
       this.formItem.orderNo = ''
       this.formItem.pageNo = 1
@@ -243,6 +254,7 @@ export default {
       orderPage(this.formItem).then((res) => {
         if (res.data.code == 200) {
           this.tableData = res.data.data
+          this.total = res.data.total
         } else {
           this.$message.error(res.data.msg)
         }

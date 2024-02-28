@@ -16,3 +16,13 @@ export const getClass = (info) => {
     method: 'get',
   })
 }
+
+// getOrder
+export const getOrder = (info) => {
+  return axios.request({
+    url: 'orther/getOrder',
+    data: info,
+    method: 'get',
+  })
+}
+

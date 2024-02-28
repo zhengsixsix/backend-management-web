@@ -32,7 +32,7 @@
 </template>
 <script>
 import Echarts from 'echarts'
-import { getInventory, getClass } from '@/api/others'
+import { getInventory, getClass, getOrder } from '@/api/others'
 export default {
   name: 'Other',
   data() {
@@ -43,7 +43,8 @@ export default {
   mounted() {
     this.getData()
     this.getDataClass()
-    this.initEachartOrder()
+
+    this.getOrder()
   },
   methods: {
     async getData() {
@@ -56,6 +57,12 @@ export default {
       let { data } = await getClass()
       if (data.code == 200) {
         this.initEachartClass(data.data.xData, data.data.YData)
+      }
+    },
+    async getOrder() {
+      let { data } = await getOrder()
+      if (data.code == 200) {
+        this.initEachartOrder(data.data.xData, data.data.YData)
       }
     },
     initEachartClass(xAxis, yAxis) {
@@ -242,19 +249,20 @@ export default {
         ],
       })
     },
-    initEachartOrder() {
+    initEachartOrder(xAxis, yAxis) {
+      console.log(yAxis)
       let myChart = Echarts.init(this.$refs['orderNumRef'])
       let option = {
         grid: {
-          left: '0%',
-          right: '3%',
+          left: '3%',
+          right: '4%',
           top: '5%',
           bottom: '10%',
         },
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+          data: xAxis,
           axisLine: {
             show: true,
           },
@@ -327,7 +335,7 @@ export default {
                 ),
               },
             },
-            data: [393, 438, 485, 631, 689, 824, 987, 1000, 1100, 1200],
+            data: yAxis,
           },
         ],
       }
