@@ -2,3 +2,116 @@
   margin-top: 20px;
   text-align: center;
 }
+
+
+.el-submenu__title {
+  height: 40px !important;
+  margin-bottom: 3px;
+  font-weight: 500;
+  color: #000000;
+  white-space: nowrap;
+  padding-left: 20px;
+  line-height: 43px;
+
+  /* 设置用户禁止选中 */
+  user-select: none;
+  border-left: 6px solid #ffffff;
+  border-radius: 6px;
+
+  &:hover {
+    color: #2992ff;
+    background: #d4e9ff;
+    border-left: 6px solid #2992ff;
+
+    // & 含义 .el-menu-item
+    border-radius: 6px;
+
+    // 实现鼠标悬停时icon变色
+    i {
+      color: #2992ff;
+    }
+  }
+
+  &.is-active {
+    color: #2992ff;
+    background: #d4e9ff;
+    border-left: 6px solid #2992ff;
+  }
+}
+
+.el-menu-item {
+  height: 40px !important;
+  margin-bottom: 3px;
+  font-weight: 500;
+  color: #000000;
+  line-height: 43px;
+
+  /* 设置用户禁止选中 */
+  user-select: none;
+  border-left: 6px solid #ffffff;
+  border-radius: 6px;
+
+  &:hover {
+    color: #2992ff;
+    background: #d4e9ff;
+    border-left: 6px solid #2992ff;
+
+    // & 含义 .el-menu-item
+    border-radius: 6px;
+
+    // 实现鼠标悬停时icon变色
+    i {
+      color: #2992ff;
+    }
+  }
+
+  &.is-active {
+    color: #2992ff;
+    background: #d4e9ff;
+    border-left: 6px solid #2992ff;
+  }
+}
+
+.el-menu {
+  border-right: 0;
+}
+
+.el-sub-menu__title {
+  height: 40px;
+  padding-right: 0; // 去除collapse缩小多余的边框
+  margin-bottom: 3px;
+  font-weight: 500;
+  color: #000000;
+
+  /* 设置用户禁止选中 */
+  user-select: none;
+  border-left: 6px solid #ffffff;
+  border-radius: 6px;
+
+  &:hover {
+    color: #2992ff;
+    background: #d4e9ff;
+    border-left: 6px solid #2992ff;
+  }
+
+  &:active {
+    color: #2992ff;
+    background: #d4e9ff;
+    border-left: 6px solid #2992ff;
+  }
+}
+
+.el-submenu {
+  .el-menu-item {
+    line-height: 43px;
+  }
+}
+
+.el-sub-menu.is-active>.el-sub-menu__title {
+  color: #2992ff !important;
+}
+
+/* icon图标也跟着变 */
+.el-sub-menu.is-active>.el-sub-menu__title i {
+  color: #2992ff !important;
+}

@@ -210,6 +210,7 @@ export default {
               const data = res.data
               this.$router.push('/welcome')
               this.$store.commit('setMenus', JSON.stringify(data.data))
+              localStorage.setItem('userName', this.formField.us)
             } else {
               this.$message({
                 message: res.data.msg,

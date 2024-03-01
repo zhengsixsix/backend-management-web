@@ -1,7 +1,17 @@
 <template>
   <Header ref="header">
     <Menu mode="horizontal" theme="dark" active-name="1">
-      <div class="layout-logo">超市后台管理系统</div>
+      <div
+        class="layout-logo"
+        :style="{ width: !isCollapsed ? '12.5rem' : '4.9rem' }"
+      >
+        <div class="image">
+          <img src="../assets/logo.webp" alt="" />
+        </div>
+        <div v-if="!isCollapsed" class="userName" :title="userName">
+          {{ userName }}
+        </div>
+      </div>
       <Icon
         @click.native="collapsedSider"
         :class="rotateIcon"
@@ -26,6 +36,7 @@ export default {
   props: ['isCollapsed'],
   data() {
     return {
+      userName: localStorage.getItem('userName'),
       barnerImagesData1: [
         {
           url: 'https://pic.imgdb.cn/item/64d89f131ddac507ccdb7db2.webp',

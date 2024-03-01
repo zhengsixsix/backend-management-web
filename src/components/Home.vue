@@ -288,7 +288,7 @@ export default {
       background-color: #fff;
     }
     .ivu-layout-sider {
-      background: #515a6e !important;
+      // background: #515a6e !important;
     }
   }
   .layout-logo {
@@ -296,16 +296,46 @@ export default {
     text-align: center;
     width: 200px;
     height: 100%;
-    color: #fff;
-    background-color: #515a6e;
+    color: #000;
+    background-color: #fff;
     float: left;
     z-index: 1000;
     position: sticky;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .userName {
+      width: 140px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .image {
+      width: 34px;
+      height: 34px;
+
+      img {
+        width: 100%;
+        border-radius: 50%;
+        height: 100%;
+      }
+    }
   }
   .layout-nav {
     width: 420px;
     margin: 0 auto;
     /* margin-right: 20px; */
   }
+}
+.ivu-layout-sider-children {
+  padding-right: 2px;
+  padding-left: 2px;
+  background-color: #ffffff;
+  border-right: none;
+  box-shadow: 2px 0 12px rgba(29, 35, 41, 0.0509803922);
+}
+.ivu-layout {
+  --un-bg-opacity: 1;
+  background-color: rgb(246 249 254 / 1) !important;
 }
 </style>

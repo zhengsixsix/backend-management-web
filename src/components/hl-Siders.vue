@@ -7,36 +7,32 @@
     :style="{ background: '#fff' }"
     v-model="isCollapsed"
   >
-    <Menu
+    <el-menu
       :default-active="activeName"
-      :active-name="activeName"
-      theme="dark"
-      width="auto"
-      :open-names="openNames"
+      class="el-menu-vertical-demo"
       v-for="item in menuList"
       :key="item.id"
-      @on-select="onSelectMenu"
-      :class="menuitemClasses"
+      @select="onSelectMenu"
+      :collapse="isCollapsed"
     >
-      <Submenu v-if="item.children.length" :name="item.path">
+      <el-submenu v-if="item.children.length" :index="item.path">
         <template slot="title">
-          <Icon :type="item.icon" />
+          <i class="el-icon-location"></i>
           {{ isCollapsed ? '' : item.name }}
         </template>
-        <MenuItem
+        <el-menu-item
           v-for="child in item.children"
           :key="child.id"
-          :name="child.path"
+          :index="child.path"
         >
-          <Icon :type="child.icon" />
-          {{ isCollapsed ? '' : child.name }}
-        </MenuItem>
-      </Submenu>
-      <MenuItem v-else :name="item.path">
-        <Icon :type="item.icon" />
+          {{ child.name }}
+        </el-menu-item>
+      </el-submenu>
+      <el-menu-item v-else :index="item.path">
+        <i class="el-icon-menu"></i>
         {{ isCollapsed ? '' : item.name }}
-      </MenuItem>
-    </Menu>
+      </el-menu-item>
+    </el-menu>
   </Sider>
 </template>
 
@@ -65,4 +61,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="less" scoped></style>
