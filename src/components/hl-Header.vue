@@ -3,7 +3,7 @@
     <Menu mode="horizontal" theme="dark" active-name="1">
       <div
         class="layout-logo"
-        :style="{ width: !isCollapsed ? '12.5rem' : '4.9rem' }"
+        :style="{ width: !isCollapsed ? '20.2rem' : '7.9rem' }"
       >
         <div class="image">
           <img src="../assets/logo.webp" alt="" />
@@ -301,5 +301,8 @@ export default {
   overflow: hidden;
   height: 100%;
   max-height: 240px;
+}
+.layout-logo {
+  // background: linear-gradient(125deg, #42e695, #3bb2b8);
 }
 </style>

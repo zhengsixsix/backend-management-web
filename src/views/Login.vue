@@ -84,23 +84,7 @@ export default {
         ps: 'ceshi',
       },
       formRules: {
-        us: [
-          {
-            validator: (rule, value, callback) => {
-              if (!value || value === ' ') {
-                callback(new Error('请输入邮箱'))
-              } else {
-                const exp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/
-                if (!exp.test(value)) {
-                  callback(new Error('请输入正确的邮箱'))
-                } else {
-                  callback()
-                }
-              }
-            },
-            trigger: 'blur',
-          },
-        ],
+        us: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
         ps: [
           {
             required: true,

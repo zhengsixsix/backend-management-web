@@ -62,18 +62,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <Page
-      class="table_page_css"
-      v-show="total"
+    <el-pagination
+      style="float: right; margin: 3px 0"
+      layout="prev, pager, next"
       :total="total"
-      :current="searchInfo.pageNo"
-      :page-size="searchInfo.pageSize"
-      :page-size-opts="pageSizeOpts"
-      @on-change="pageNoChange"
-      @on-page-size-change="pageSizeChange"
-      show-sizer
-      show-elevator
-      show-total
+      @current-change="pageNoChange"
     />
     <AddUpdate @reload="getList" ref="AddUpdate"></AddUpdate>
     <RolesPermits @reload="getList" ref="RolesPermits"></RolesPermits>

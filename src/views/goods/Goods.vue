@@ -12,7 +12,7 @@
       <el-form-item label="商品名称">
         <el-input
           size="small"
-          v-model="formItem.key"
+          v-model="formItem.name"
           placeholder="模糊搜索"
           clearable
         />
@@ -33,6 +33,12 @@
     </el-form>
     <el-table :data="tableData" border>
       <el-table-column
+        label="序号"
+        type="index"
+        align="center"
+        width="80"
+      ></el-table-column>
+      <el-table-column
         prop="name"
         label="名称"
         align="center"
@@ -41,6 +47,16 @@
         prop="price"
         label="价格"
         align="center"
+      ></el-table-column>
+      <el-table-column
+        label="规格"
+        align="center"
+        prop="Specifications"
+      ></el-table-column>
+      <el-table-column
+        label="货位"
+        align="center"
+        prop="CargoSpace"
       ></el-table-column>
       <el-table-column
         prop="desc"
@@ -78,18 +94,11 @@
         </template>
       </el-table-column>
     </el-table>
-    <Page
-      class="table_page_css"
-      v-show="total"
+    <el-pagination
+      style="float: right; margin: 3px 0"
+      layout="prev, pager, next"
       :total="total"
-      :current="searchInfo.pageNo"
-      :page-size="searchInfo.pageSize"
-      :page-size-opts="pageSizeOpts"
-      @on-change="pageNoChange"
-      @on-page-size-change="pageSizeChange"
-      show-sizer
-      show-elevator
-      show-total
+      @current-change="pageNoChange"
     />
     <AddUpdate @reload="getList" ref="AddUpdate"></AddUpdate>
   </el-card>
@@ -112,7 +121,7 @@ export default {
       },
       pageSizeOpts: [1, 2, 5, 10],
       formItem: {
-        key: '',
+        name: '',
         typeid: '',
       },
       typeList: [
@@ -141,7 +150,7 @@ export default {
     },
     search() {
       this.searchInfo = {
-        key: this.formItem.key,
+        name: this.formItem.name,
         typeid: this.formItem.typeid,
         pageNo: 1,
         pageSize: this.searchInfo.pageSize,
@@ -150,7 +159,7 @@ export default {
     },
     clear() {
       this.formItem = {
-        key: '',
+        name: '',
         typeid: '',
       }
       this.searchInfo = {

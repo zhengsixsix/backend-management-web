@@ -20,6 +20,9 @@
                 v-model="formData.name"
                 placeholder="请选择"
                 style="width: 100%"
+                remote
+                filterable
+                :remote-method="remoteMethod"
               >
                 <el-option
                   v-for="item of foodsNameList"
@@ -165,6 +168,7 @@ export default {
         { value: '快递', label: '快递' },
       ],
       foodsNameList: [],
+      searchName: '',
     }
   },
   created() {
@@ -172,13 +176,17 @@ export default {
     this.eachData()
   },
   methods: {
+    remoteMethod(v) {
+      this.searchName = v
+      this.getFoodsList()
+    },
     eachData() {
       if (this.title == '编辑订单') {
         this.formData = JSON.parse(JSON.stringify(this.info))
       }
     },
     async getFoodsList() {
-      let { data } = await getAllFoods()
+      let { data } = await getAllFoods({ name: this.searchName })
       if (data.code == 200) {
         this.foodsNameList = data.data
       } else {

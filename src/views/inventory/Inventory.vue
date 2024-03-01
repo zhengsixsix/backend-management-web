@@ -4,24 +4,24 @@
       <el-form-item label="商品名称">
         <el-input
           size="small"
-          v-model="formItem.key"
+          v-model="formItem.name"
           placeholder="模糊搜索"
           clearable
         />
       </el-form-item>
-      <el-form-item label="存放区">
+      <el-form-item label="货位">
         <el-input
           size="small"
-          v-model="formItem.key"
+          v-model="formItem.CargoSpace"
           placeholder="模糊搜索"
           clearable
         />
       </el-form-item>
       <el-form-item :label-width="20">
-        <el-button size="small" type="primary" @click="search">查询</el-button>
-        <el-button size="small" style="margin-left: 8px" @click="clear">
+        <el-button size="small" type="primary" @click="getData">查询</el-button>
+        <!-- <el-button size="small" style="margin-left: 8px" @click="clear">
           重置
-        </el-button>
+        </el-button> -->
       </el-form-item>
     </el-form>
     <el-table :data="tableData" border>
@@ -57,7 +57,7 @@
       </el-table-column>
       <el-table-column label="库存数量" align="center">
         <template slot-scope="scope">
-          <el-input size="small"  type="number" v-model="scope.row.Inventory" />
+          <el-input size="small" type="number" v-model="scope.row.Inventory" />
         </template>
       </el-table-column>
       <el-table-column label="实际盘点量" align="center">
@@ -87,6 +87,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      style="float: right; margin: 3px 0"
+      layout="prev, pager, next"
+      :total="total"
+      @current-change="ChangePage"
+    />
   </el-card>
 </template>
 <script>
@@ -96,9 +102,11 @@ export default {
   data() {
     return {
       tableData: [],
+      total: 0,
       baseUrl: '',
       formItem: {
         name: '',
+        CargoSpace: '',
         pageNum: 1,
         pageSize: 10,
       },
@@ -109,6 +117,10 @@ export default {
     this.baseUrl = process.env.VUE_APP_BASEURL
   },
   methods: {
+    ChangePage(v) {
+      this.formItem.pageNum = v
+      this.getData()
+    },
     async handlerSubmit(v) {
       let { data } = await addInventory(v)
       if (data.code == 200) {
@@ -119,7 +131,7 @@ export default {
       }
     },
     async getData() {
-      let { data } = await goodsPage()
+      let { data } = await goodsPage(this.formItem)
       if (data.code == 200) {
         this.tableData = data.data
       }
