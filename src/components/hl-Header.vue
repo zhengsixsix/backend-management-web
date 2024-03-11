@@ -3,7 +3,7 @@
     <Menu mode="horizontal" theme="dark" active-name="1">
       <div
         class="layout-logo"
-        :style="{ width: !isCollapsed ? '20.2rem' : '7.9rem' }"
+        :style="{ width: !isCollapsed ? '20rem' : '7.9rem' }"
       >
         <div class="image">
           <img src="../assets/logo.webp" alt="" />

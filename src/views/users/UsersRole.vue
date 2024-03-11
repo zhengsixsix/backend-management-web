@@ -76,7 +76,7 @@ export default {
         usersUpdateRole(this.formItem)
           .then((res) => {
             if (res.data.code === 200) {
-              this.$Message.success('商品添加成功')
+              this.$Message.success('权限分配成功')
               this.cancel('formItem')
               this.$emit('reload')
             } else {

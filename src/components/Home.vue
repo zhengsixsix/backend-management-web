@@ -182,6 +182,9 @@ export default {
     updatePsOk(name) {
       this.$refs[name].validate((valid) => {
         if (!valid) return
+        if (this.formValidate.newPs.length < 6) {
+          return this.$Message.error('密码长度不能小于6位')
+        }
         usersUpdatePs(this.formValidate)
           .then((res) => {
             if (res.data.code === 200) {
@@ -262,12 +265,17 @@ export default {
     box-shadow: 0 0.2rem 1.5rem 0 rgba(0, 0, 0, 0.1);
     // background: linear-gradient(125deg, #42e695, #3bb2b8) !important;
   }
-  .ivu-menu-dark,
-  .ivu-menu,
-  .ivu-menu-item,
-  .ivu-menu-submenu,
-  .ivu-menu-submenu-title {
-    // background: transparent !important;
+  .ivu-layout-sider {
+    width: 20rem !important;
+    min-width: 20rem !important;
+    max-width: 20rem !important;
+    flex: 0 0 20rem !important;
+  }
+  .ivu-layout-sider-collapsed {
+    width: 7.9rem !important;
+    min-width: 7.9rem !important;
+    max-width: 7.9rem !important;
+    flex: 0 0 7.9rem !important;
   }
   .ivu-layout {
     height: 100%;

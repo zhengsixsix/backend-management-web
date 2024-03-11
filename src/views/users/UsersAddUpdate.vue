@@ -56,6 +56,15 @@ export default {
       loading: false,
     }
   },
+  watch: {
+    open: {
+      handler() {
+        if (this.open == false) {
+          this.cancel()
+        }
+      },
+    },
+  },
   methods: {
     init() {
       this.title = '用户添加'
@@ -64,13 +73,16 @@ export default {
     ok(name) {
       this.$refs[name].validate((valid) => {
         if (!valid) return
+        if (this.formItem.ps.length < 6) {
+          return this.$Message.error('密码长度不能小于6位')
+        }
         this.loading = true
         const postData = JSON.parse(JSON.stringify(this.formItem))
         usersAdd(postData)
           .then((res) => {
             this.loading = false
             if (res.data.code === 200) {
-              this.$Message.success('商品添加成功')
+              this.$Message.success('账户添加成功')
               this.cancel('formItem')
               this.$emit('reload')
             } else {

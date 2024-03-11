@@ -192,7 +192,7 @@ export default {
           .then((res) => {
             if (res.data.code === 200) {
               const data = res.data
-              this.$router.push('/welcome')
+              this.$router.push('/other')
               this.$store.commit('setMenus', JSON.stringify(data.data))
               localStorage.setItem('userName', this.formField.us)
             } else {

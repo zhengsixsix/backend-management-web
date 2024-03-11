@@ -46,7 +46,8 @@
           clearable
         />
       </el-form-item>
-      <el-form-item label="上传图片" prop="img">
+      <el-form-item label="上传图片" prop="img" class="imgRequire">
+        <span class="require">*</span>
         <Upload ref="addUpload" :before-upload="handleUpload" action>
           <Button v-show="!imgUrl" icon="md-cloud-upload">上传图片</Button>
           <img v-show="imgUrl" :src="imgUrl" class="uploadImgUrl" />
@@ -74,6 +75,7 @@ export default {
         desc: '',
         Specifications: '',
         CargoSpace: '',
+        img: '',
       },
       ruleValidate: {
         name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
@@ -122,6 +124,7 @@ export default {
     ok(name) {
       this.$refs[name].validate((valid) => {
         if (!valid) return
+        if (this.formItem.img == '') return this.$Message.error('请上传图片')
         if (this.formItem._id) {
           goodsUpdate(this.formItem)
             .then((res) => {
@@ -160,6 +163,7 @@ export default {
         desc: '',
         typeid: '',
       }
+      this.formItem.img = ''
       this.$refs[name].resetFields()
       this.open = false
     },
@@ -201,5 +205,13 @@ export default {
 .uploadImgUrl {
   width: 50px;
   height: 50px;
+}
+.imgRequire {
+  position: relative;
+  .require {
+    position: absolute;
+    left: -7.7rem;
+    color: red;
+  }
 }
 </style>
